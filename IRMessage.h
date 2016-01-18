@@ -18,7 +18,7 @@ public:
 	byte receiver; 
 	byte id; 
 	
-	unsigned int hexToDec(String str);
+	unsigned int hexToDec(String str); 
 
 	IRMessage(); 	
 	void decode(unsigned long message); 
