@@ -15,7 +15,7 @@ public:
 	byte sender; 
 	byte command; 
 	byte param; 
-	byte receiver; 
+	byte receiver;  
 	byte id; 
 	
 	unsigned int hexToDec(String str); 
