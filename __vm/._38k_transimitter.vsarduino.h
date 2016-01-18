@@ -96,6 +96,8 @@ extern "C" void __cxa_pure_virtual() {;}
 #include <..\_38k_transimitter\LedStatusBar.h>
 #include <..\_38k_transimitter\RobotController.cpp>
 #include <..\_38k_transimitter\RobotController.h>
+#include <..\_38k_transimitter\RobotLifeCycle.cpp>
+#include <..\_38k_transimitter\RobotLifeCycle.h>
 #include <..\_38k_transimitter\RobotModel.cpp>
 #include <..\_38k_transimitter\RobotModel.h>
 #include <..\_38k_transimitter\SoundPlayer.cpp>

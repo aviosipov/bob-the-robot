@@ -15,6 +15,7 @@ class RobotModel {
     
     public:
     
+		RobotModel(); 
         RobotModel(int id, int group) ; 
     
         void shoot() ;

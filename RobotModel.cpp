@@ -1,6 +1,10 @@
 #include "RobotModel.h" 
 #include "Arduino.h" 
 
+RobotModel::RobotModel()
+{
+}
+
 RobotModel::RobotModel(int id, int group) {
 
 	_id = id;

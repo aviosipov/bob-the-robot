@@ -43,6 +43,9 @@
     <ClInclude Include="LedRGBIndicator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RobotLifeCycle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IRMessaging.cpp">
@@ -64,6 +67,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LedRGBIndicator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotLifeCycle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

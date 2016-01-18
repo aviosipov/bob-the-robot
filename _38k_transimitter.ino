@@ -10,13 +10,17 @@
 #include "SoundPlayer.h" 
 #include "IRMessage.h"
 #include "LedRGBIndicator.h"
+#include "RobotLifeCycle.h"
 
+
+RobotController robotController; 
 RobotModel robotModel(7,1); 
 LedStatusBar ledBar; 
 SoundPlayer soundPlayer(8); 
 IRMessaging irMessaging(2, 2); 
 IRMessage message;
 LedRGBIndicator ledRGB; 
+RobotLifeCycle lifeCycleManager; 
 
 unsigned long irMessage;
 
@@ -34,6 +38,10 @@ void setup() {
 
 	ledRGB.init(4, 5, 6); 
 	ledRGB.animate();
+
+
+	lifeCycleManager.robotController.init(); 
+	lifeCycleManager.robotModel.shoot();
 
 
 	soundPlayer.playCoin();
@@ -60,26 +68,9 @@ void loop() {
 
 
 	message.decode(irMessaging.getIRMessage()); 
-	/*
-	if (message.isValid()) {
 
-		/// check if this is a friend or an enemie
-
-		switch (message.command) {
-
-			case 'ping' : 
-				break; 
-			case 'attack' :
-				break;  
-				case 'heal'
-
-
-		}
-
-
-
-	}
- 	*/ 
+	if (message.isValid())
+		lifeCycleManager.handleMessage(message); 
   
 
 }
