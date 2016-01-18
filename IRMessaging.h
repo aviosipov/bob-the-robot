@@ -11,6 +11,7 @@ class IRMessaging {
 		decode_results results;
 
     
+
     public:
     
         IRMessaging(int txPin, int rxPin) ;
