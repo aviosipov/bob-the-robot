@@ -7,7 +7,7 @@ class IRMessaging {
         int _txPin; 
 		int _rxPin;
         
-		IRrecv *irRecv; 
+		IRrecv *irRecv;  
 		decode_results results;
 
     
