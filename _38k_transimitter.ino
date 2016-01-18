@@ -9,12 +9,14 @@
 #include "LedStatusBar.h"
 #include "SoundPlayer.h" 
 #include "IRMessage.h"
+#include "LedRGBIndicator.h"
 
-RobotModel robotModel; 
+RobotModel robotModel(7,1); 
 LedStatusBar ledBar; 
 SoundPlayer soundPlayer(8); 
 IRMessaging irMessaging(2, 2); 
 IRMessage message;
+LedRGBIndicator ledRGB; 
 
 unsigned long irMessage;
 
@@ -29,6 +31,11 @@ void setup() {
 
 	ledBar.init(A0, A1, A2); 
 	ledBar.animate(); 
+
+	ledRGB.init(4, 5, 6); 
+	ledRGB.animate();
+
+
 	soundPlayer.playCoin();
 		
 	Serial.begin(9600);
@@ -36,7 +43,11 @@ void setup() {
 	
 	message.decode(443634928); 
 	Serial.println(message.id); 
-	 
+
+	message.decode(805306368); 
+
+	if (!message.isValid())
+		Serial.println("invalid message"); 
 
 	
 	
@@ -47,15 +58,28 @@ void setup() {
 
 void loop() {
 
- 
-	irMessage = irMessaging.getIRMessage(); 
 
-	if (irMessage > 0) {		
-		Serial.println(irMessage, HEX);
+	message.decode(irMessaging.getIRMessage()); 
+	/*
+	if (message.isValid()) {
+
+		/// check if this is a friend or an enemie
+
+		switch (message.command) {
+
+			case 'ping' : 
+				break; 
+			case 'attack' :
+				break;  
+				case 'heal'
+
+
+		}
+
+
+
 	}
-
-	/// now, process ir message 
-
+ 	*/ 
   
 
 }

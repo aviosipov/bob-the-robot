@@ -2,17 +2,20 @@ class RobotModel {
     
     private:
     
-        int health ; 
-        int hitPoints ; 
-        int hitDelay ;       
+        int _health ; 
+        int _hitPoints ; 
+        int _hitDelay ;       
         
-		unsigned long lastShootTime;
+		int _id; 
+		int _group;
+
+		unsigned long _lastShootTime;
 
          
     
     public:
     
-        RobotModel() ; 
+        RobotModel(int id, int group) ; 
     
         void shoot() ;
         void takeHit(int points) ;

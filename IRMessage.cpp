@@ -19,8 +19,7 @@ unsigned int IRMessage::hexToDec(String hexString)
 	7  - command
 	15 - param 
 	4  - receiver id 
-	F0 - id ( random generated number )
-	
+	F0 - id ( random generated number )	
 	
 	*/
 
@@ -43,6 +42,12 @@ unsigned int IRMessage::hexToDec(String hexString)
 }
 
 
+bool IRMessage::isValid()
+{
+
+	return _isValid; 
+}
+
 IRMessage::IRMessage()
 {
 	group = 0; 
@@ -58,14 +63,27 @@ IRMessage::IRMessage()
 void IRMessage::decode(unsigned long message)
 {
 
-	String tmp = String(message, HEX);
+	if (message >= validMessageCodeMin && message <= validMessageCodeMax) {
 
-	group = hexToDec((String)tmp.charAt(0));
-	sender = hexToDec((String)tmp.charAt(1));
-	command = hexToDec((String)tmp.charAt(2));
-	param = hexToDec(tmp.substring(3, 5));
-	receiver = hexToDec((String)tmp.charAt(5));
-	id = hexToDec(tmp.substring(6, 8));
+		String tmp = String(message, HEX);
+
+		group = hexToDec((String)tmp.charAt(0));
+		sender = hexToDec((String)tmp.charAt(1));
+		command = hexToDec((String)tmp.charAt(2));
+		param = hexToDec(tmp.substring(3, 5));
+		receiver = hexToDec((String)tmp.charAt(5));
+		id = hexToDec(tmp.substring(6, 8));
+
+		_isValid = true; 
+
+	}
+	else {
+
+		_isValid = false;
+
+	}
+
+
 }
 
 

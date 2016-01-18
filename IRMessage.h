@@ -1,11 +1,16 @@
 #pragma once
 
+#define validMessageCodeMin 268435456  // min in hex 10000000 ( 1st group ) 
+#define validMessageCodeMax 805306367  // max in hex 2FFFFFFF ( 2nd group )
+
+
+
 class IRMessage
 {
 
 private:
 
-	unsigned long _message; 
+	bool _isValid; 
 	
 
 
@@ -20,6 +25,7 @@ public:
 	
 	unsigned int hexToDec(String str); 
 
+	bool isValid(); 
 	IRMessage(); 	
 	void decode(unsigned long message); 
 	

@@ -90,6 +90,8 @@ extern "C" void __cxa_pure_virtual() {;}
 #include <..\_38k_transimitter\IRMessage.h>
 #include <..\_38k_transimitter\IRMessaging.cpp>
 #include <..\_38k_transimitter\IRMessaging.h>
+#include <..\_38k_transimitter\LedRGBIndicator.cpp>
+#include <..\_38k_transimitter\LedRGBIndicator.h>
 #include <..\_38k_transimitter\LedStatusBar.cpp>
 #include <..\_38k_transimitter\LedStatusBar.h>
 #include <..\_38k_transimitter\RobotController.cpp>
