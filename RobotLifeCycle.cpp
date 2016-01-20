@@ -7,6 +7,24 @@
 
 
 
+
+
+
+
+void RobotLifeCycle::onInit(CallbackType callback)
+{
+	_callback = callback; 
+
+
+}
+
+void RobotLifeCycle::test()
+{
+	int variable = 0;
+	int result = _callback(variable);
+
+}
+
 RobotLifeCycle::RobotLifeCycle() {
 	
 }
@@ -75,6 +93,18 @@ void RobotLifeCycle::handleMessage(IRMessage message)
 
 
 }
+
+void RobotLifeCycle::attachRobotModel(RobotModel &robotModel)
+{
+	_robotModel = &robotModel; 
+	
+}
+
+void RobotLifeCycle::attachRobotController(RobotController &robotController)
+{
+	_robotController = &robotController; 
+}
+
 
 
 

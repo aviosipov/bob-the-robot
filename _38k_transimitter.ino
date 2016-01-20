@@ -27,9 +27,16 @@ unsigned long irMessage;
 
 
 
+int test_callback(int variable) {
+	Serial.println("callback here"); 
+}
+
 
 
 void setup() {
+
+	Serial.begin(9600);
+	
 
 	irMessaging.enableRX(); 	
 
@@ -40,24 +47,22 @@ void setup() {
 	ledRGB.animate();
 
 
-	lifeCycleManager.robotController.init(); 
-	lifeCycleManager.robotModel.shoot();
+	lifeCycleManager.attachRobotModel(robotModel); 
+	lifeCycleManager.attachRobotController(robotController); 
 
+	lifeCycleManager.onInit(&test_callback);
+	Serial.println("Program Started");
+
+	lifeCycleManager.test(); 
 
 	soundPlayer.playCoin();
 		
-	Serial.begin(9600);
+	
 
 	
 	message.decode(443634928); 
 	Serial.println(message.id); 
 
-	message.decode(805306368); 
-
-	if (!message.isValid())
-		Serial.println("invalid message"); 
-
-	
 	
   
 }

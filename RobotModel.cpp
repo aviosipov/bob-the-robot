@@ -43,7 +43,10 @@ void RobotModel::shoot() {
 
 
 
-void RobotModel::takeHit(int points) {
+void RobotModel::takeHit(int hitPoints) {
+
+	if (_health >= hitPoints)
+		_health -= hitPoints;
     
 } 
 

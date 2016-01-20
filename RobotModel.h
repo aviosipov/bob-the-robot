@@ -19,7 +19,7 @@ class RobotModel {
         RobotModel(int id, int group) ; 
     
         void shoot() ;
-        void takeHit(int points) ;
+        void takeHit(int hitPoints) ;
         int getHealth() ;   
     
          
