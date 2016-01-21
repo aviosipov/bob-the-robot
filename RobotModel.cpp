@@ -1,20 +1,33 @@
-#include "RobotModel.h" 
 #include "Arduino.h" 
+#include "RobotModel.h" 
+
 
 RobotModel::RobotModel()
 {
+	_id = 25; 
+	_group = 1; 
 }
 
-RobotModel::RobotModel(int id, int group) {
+RobotModel::RobotModel(byte id, byte group) {
 
 	_id = id;
 	_group = group; 	
 
-    _health = 150 ;  
+    _health = 100 ;  
     _hitPoints = 20 ; 
     _hitDelay = 2000 ; 
     _lastShootTime = 0 ; 
 
+}
+
+byte RobotModel::getGroup()
+{
+	return _group; 
+}
+
+byte RobotModel::getID()
+{
+	return _id; 
 }
 
 
@@ -43,7 +56,7 @@ void RobotModel::shoot() {
 
 
 
-void RobotModel::takeHit(int hitPoints) {
+void RobotModel::takeHit(byte hitPoints) {
 
 	if (_health >= hitPoints)
 		_health -= hitPoints;

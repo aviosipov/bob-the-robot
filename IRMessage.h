@@ -23,11 +23,16 @@ public:
 	byte receiver;  
 	byte id; 
 	
-	unsigned int hexToDec(String str); 
+	unsigned long hexToDec(String str); 
+	String decToHex(byte decValue, byte desiredStringLength); 
 
-	bool isValid(); 
+	bool isValid();  
+
 	IRMessage(); 	
+
 	void decode(unsigned long message); 
+	unsigned long encode();
+
 	
 };
 

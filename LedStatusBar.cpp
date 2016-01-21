@@ -1,8 +1,8 @@
-#include "LedStatusBar.h"
 #include "Arduino.h"
+#include "LedStatusBar.h"
 
 
-void LedStatusBar::init(int pin0, int pin1, int pin2)
+void LedStatusBar::init(byte pin0, byte pin1, byte pin2)
 {
 	_pin0 = pin0;
 	_pin1 = pin1;
@@ -18,7 +18,7 @@ void LedStatusBar::blink()
 {
 	setStatus(0, 0, 0); 	
 	setStatus(1, 1, 1);
-	delay(250); 
+	delay(20); 
 	setStatus(0, 0, 0);
 
 }
@@ -42,7 +42,7 @@ void LedStatusBar::animate()
 
 }
 
-void LedStatusBar::setStatus(int pin0, int pin1, int pin2) 
+void LedStatusBar::setStatus(byte pin0, byte pin1, byte pin2)
 {
 	digitalWrite(_pin0, pin0); 
 	digitalWrite(_pin1, pin1);

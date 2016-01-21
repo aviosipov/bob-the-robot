@@ -1,8 +1,11 @@
+#include "Arduino.h"
+#include "IRMessage.h"
 #include "IRMessaging.h" 
 #include <IRremote.h>
 
 
-IRMessaging::IRMessaging(int txPin, int rxPin) {
+
+IRMessaging::IRMessaging(byte txPin, byte rxPin) {
 
 	_txPin = txPin; 
 	_rxPin = rxPin; 
@@ -21,25 +24,29 @@ void IRMessaging::initTX()
 {
 }
 
-unsigned long IRMessaging::getIRMessage() {
+IRMessage IRMessaging::getIRMessage() {
 
+	IRMessage message;
 
-	if (irRecv->decode(&results)) {
+	if (irRecv->decode(&results)) {		
 
+		message.decode(results.value); 
 		irRecv->resume(); 
-		return results.value;  
 
+	} else {
+
+		message.decode(0); /// trigger invalid message 
+		
 	}
-	else {
 
-		return 0;
-
-	}
+	return message;
     
     
     
 } 
 
-void IRMessaging::sendIRMessage(int message) {
+void IRMessaging::sendIRMessage(IRMessage message) {
+
+	unsigned long irData = message.encode(); 
     
 } 

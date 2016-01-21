@@ -94,11 +94,11 @@ class SoundPlayer
 {
 
 private:
-	short _speakerPin; 
+	byte _speakerPin; 
 
 public:
 
-	SoundPlayer(short speakerPin);
+	SoundPlayer(byte speakerPin);
 	
 
 	void playGun(); 

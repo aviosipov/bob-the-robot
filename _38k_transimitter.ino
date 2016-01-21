@@ -26,18 +26,26 @@ unsigned long irMessage;
 
 
 
+void onStatusTimer() {
 
-int test_callback(int variable) {
-	Serial.println("callback here"); 
+	message.group = robotModel.getGroup();
+	message.sender = robotModel.getID();
+	message.command = COMMAND_STATUS; 
+	message.param = robotModel.getHealth(); 
+	message.receiver = MESSAGE_TO_ALL; 
+	
+	irMessaging.sendIRMessage(message); 
+	
+	ledBar.blink();
+
 }
-
 
 
 void setup() {
 
 	Serial.begin(9600);
+	Serial.println("Program Started");
 	
-
 	irMessaging.enableRX(); 	
 
 	ledBar.init(A0, A1, A2); 
@@ -46,23 +54,21 @@ void setup() {
 	ledRGB.init(4, 5, 6); 
 	ledRGB.animate();
 
+	soundPlayer.playCoin();
 
 	lifeCycleManager.attachRobotModel(robotModel); 
 	lifeCycleManager.attachRobotController(robotController); 
-
-	lifeCycleManager.onInit(&test_callback);
-	Serial.println("Program Started");
-
-	lifeCycleManager.test(); 
-
-	soundPlayer.playCoin();
-		
-	
+	lifeCycleManager.setStatusTiming(1500);
 
 	
+	lifeCycleManager.onStatusTimer(&onStatusTimer);
+	
+	
+
+	/*
 	message.decode(443634928); 
 	Serial.println(message.id); 
-
+	*/ 
 	
   
 }
@@ -71,12 +77,15 @@ void setup() {
 
 void loop() {
 
+	lifeCycleManager.tick(); 
 
+
+	/*
 	message.decode(irMessaging.getIRMessage()); 
 
 	if (message.isValid())
 		lifeCycleManager.handleMessage(message); 
-  
+  */ 
 
 }
 

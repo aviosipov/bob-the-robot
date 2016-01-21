@@ -1,11 +1,12 @@
+#include "IRMessage.h"
 #include <IRremote.h>
 
 class IRMessaging {
     
     private:
     
-        int _txPin; 
-		int _rxPin;
+        byte _txPin; 
+		byte _rxPin;
         
 		IRrecv *irRecv;  
 		decode_results results;
@@ -14,13 +15,13 @@ class IRMessaging {
 
     public:
     
-        IRMessaging(int txPin, int rxPin) ;
+        IRMessaging(byte txPin, byte rxPin) ;
 
 		void enableRX();
 		void initTX(); 
         
-        unsigned long getIRMessage() ; 
-        void sendIRMessage(int message) ; 
+        IRMessage getIRMessage() ; 
+        void sendIRMessage(IRMessage message) ;
     
 
 

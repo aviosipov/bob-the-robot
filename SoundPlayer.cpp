@@ -1,9 +1,10 @@
+#include "Arduino.h"
 #include <NewTone.h>
 #include "SoundPlayer.h"
 	
 
 
-SoundPlayer::SoundPlayer(short speakerPin)
+SoundPlayer::SoundPlayer(byte speakerPin)
 {
 	_speakerPin = speakerPin; 
 }

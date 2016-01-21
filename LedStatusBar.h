@@ -3,18 +3,18 @@ class LedStatusBar {
 
 private:
 
-	int _pin0; 
-	int _pin1; 
-	int _pin2; 
+	byte _pin0; 
+	byte _pin1;
+	byte _pin2;
 
 
 public:
 
-	void init(int pin0, int pin1, int pin2);
+	void init(byte pin0, byte pin1, byte pin2);
 
 	void blink(); 
 	void animate();  
-	void setStatus(int pin0, int pin1, int pin2);
+	void setStatus(byte pin0, byte pin1, byte pin2);
 
 
 

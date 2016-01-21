@@ -3,7 +3,7 @@
 #include "IRMessage.h"
  
 
-unsigned int IRMessage::hexToDec(String hexString)
+unsigned long IRMessage::hexToDec(String hexString)
 {
 
 	/*
@@ -24,7 +24,7 @@ unsigned int IRMessage::hexToDec(String hexString)
 	*/
 
 
-	unsigned int decValue = 0;
+	unsigned long decValue = 0;
 	int nextInt;
 	
 	for (int i = 0; i < hexString.length(); i++) {
@@ -39,6 +39,14 @@ unsigned int IRMessage::hexToDec(String hexString)
 	} 
 
 	return decValue;
+}
+
+String IRMessage::decToHex(byte decValue, byte desiredStringLength)
+{
+	String hexString = String(decValue, HEX);
+	while (hexString.length() < desiredStringLength) hexString = "0" + hexString;
+
+	return hexString;
 }
 
 
@@ -83,6 +91,14 @@ void IRMessage::decode(unsigned long message)
 
 	}
 
+
+}
+
+unsigned long IRMessage::encode()
+{
+
+	String s = decToHex(group, 1) + decToHex(sender, 1) + decToHex(command, 1) + decToHex(param, 2) + decToHex(receiver, 1) + decToHex(id, 2); 
+	return hexToDec(s); 
 
 }
 

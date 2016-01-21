@@ -5,29 +5,59 @@
 #include "RobotLifeCycle.h"
 
 
-
-
-
-
-
-
-void RobotLifeCycle::onInit(CallbackType callback)
-{
-	_callback = callback; 
-
-
-}
-
-void RobotLifeCycle::test()
-{
-	int variable = 0;
-	int result = _callback(variable);
-
-}
-
 RobotLifeCycle::RobotLifeCycle() {
-	
+
+	_lastStatusEvent = 0; 
+	_statusIntervalDelay = 100;
 }
+
+void RobotLifeCycle::_handleStatusTimer()
+{
+	unsigned long currentTime = millis();
+
+	if ((currentTime - _lastStatusEvent ) >= _statusIntervalDelay) {
+		
+		_lastStatusEvent = currentTime; 
+		_callbackOnStatusTimer(); 
+
+	}
+}
+
+void RobotLifeCycle::tick()
+{
+
+	_handleStatusTimer(); 
+
+
+}
+
+void RobotLifeCycle::onStatus(CallbackOnStatus callback)
+{
+	_callbackOnStatus = callback; 
+}
+
+void RobotLifeCycle::onHeal(CallbackOnHeal callback)
+{
+	_callbackOnHeal = callback; 
+}
+
+void RobotLifeCycle::onAttack(CallbackOnAttack callback)
+{
+	_callbackOnAttack = callback; 
+}
+
+void RobotLifeCycle::onStatusTimer(CallbackOnStatusTimer callback)
+{
+	_callbackOnStatusTimer = callback; 
+}
+
+void RobotLifeCycle::setStatusTiming(short interval)
+{
+	_statusIntervalDelay = interval;
+}
+
+
+
 
 void RobotLifeCycle::handleMessage(IRMessage message)
 {

@@ -2,8 +2,8 @@ class RobotController {
     
     private:
     
-        int motorLeft ; 
-        int motorRight;  
+        byte motorLeft ; 
+		byte motorRight;
       
          
     
