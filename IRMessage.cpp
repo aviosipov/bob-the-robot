@@ -56,8 +56,15 @@ bool IRMessage::isValid()
 	return _isValid; 
 }
 
+unsigned long IRMessage::getRawData()
+{
+	return _rawData;
+}
+
 IRMessage::IRMessage()
 {
+	_rawData = 0; 
+
 	group = 0; 
 	sender = 0;
 	command = 0;
@@ -70,6 +77,8 @@ IRMessage::IRMessage()
 
 void IRMessage::decode(unsigned long message)
 {
+
+	_rawData = message; 
 
 	if (message >= validMessageCodeMin && message <= validMessageCodeMax) {
 

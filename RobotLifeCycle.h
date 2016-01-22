@@ -29,8 +29,9 @@ private:
 	unsigned long _lastStatusEvent;
 	short _statusIntervalDelay; 
 
-	RobotModel *	_robotModel; 
-	RobotController *_robotController; 
+	RobotModel		*	_robotModel; 
+	RobotController *	_robotController; 
+	IRMessaging		*	_irMessaging; 
 
 	CallbackOnStatusTimer _callbackOnStatusTimer;
 	CallbackOnAttack	_callbackOnAttack;
@@ -39,7 +40,7 @@ private:
 
 
 	void _handleStatusTimer(); 
-
+	void _checkForIRMessage(); 
 
 public:
 	
@@ -66,7 +67,7 @@ public:
 	void handleMessage(IRMessage message); 
 	void attachRobotModel(RobotModel &robotModel); 
 	void attachRobotController(RobotController &robotController );  
-
+	void attachIRMessaging(IRMessaging &irMessaging); 
 
 
 	

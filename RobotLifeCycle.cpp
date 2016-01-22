@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "IRMessage.h"
+#include "IRMessaging.h" 
 #include "RobotController.h"
 #include "RobotModel.h"
 #include "RobotLifeCycle.h"
@@ -23,10 +24,27 @@ void RobotLifeCycle::_handleStatusTimer()
 	}
 }
 
+void RobotLifeCycle::_checkForIRMessage()
+{
+		
+	IRMessage message = _irMessaging->getIRMessage() ;
+
+	if (message.isValid()) {
+
+		_callbackOnStatus(message);
+
+	}
+		
+
+
+}
+
 void RobotLifeCycle::tick()
 {
 
 	_handleStatusTimer(); 
+	_checkForIRMessage(); 
+
 
 
 }
@@ -133,6 +151,11 @@ void RobotLifeCycle::attachRobotModel(RobotModel &robotModel)
 void RobotLifeCycle::attachRobotController(RobotController &robotController)
 {
 	_robotController = &robotController; 
+}
+
+void RobotLifeCycle::attachIRMessaging(IRMessaging &irMessaging)
+{
+	_irMessaging = &irMessaging; 
 }
 
 

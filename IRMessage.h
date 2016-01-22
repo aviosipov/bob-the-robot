@@ -11,6 +11,7 @@ class IRMessage
 private:
 
 	bool _isValid; 
+	unsigned long _rawData; 
 	
 
 
@@ -27,6 +28,7 @@ public:
 	String decToHex(byte decValue, byte desiredStringLength); 
 
 	bool isValid();  
+	unsigned long getRawData(); 
 
 	IRMessage(); 	
 

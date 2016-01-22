@@ -17,7 +17,7 @@ RobotController robotController;
 RobotModel robotModel(7,1); 
 LedStatusBar ledBar; 
 SoundPlayer soundPlayer(8); 
-IRMessaging irMessaging(2, 2); 
+IRMessaging irMessaging(3, 2); 
 IRMessage message;
 LedRGBIndicator ledRGB; 
 RobotLifeCycle lifeCycleManager; 
@@ -25,6 +25,41 @@ RobotLifeCycle lifeCycleManager;
 unsigned long irMessage;
 
 
+void onStatus(IRMessage message) {
+
+	if (message.group == robotModel.getGroup()) {
+
+		ledRGB.green(); 
+
+	}
+	else {
+
+		ledRGB.red(); 
+	}
+
+	Serial.print("group : "); 
+	Serial.print(message.group); 
+
+	Serial.print(" , sender : ");
+	Serial.print(message.sender);
+
+	Serial.print(" , command : ");
+	Serial.print(message.command);
+
+	Serial.print(" , param : ");
+	Serial.print(message.param);
+
+	Serial.print(" , receiver : ");
+	Serial.print(message.receiver);
+
+	Serial.print(" , id : ");
+	Serial.println(message.id);
+
+
+
+
+
+}
 
 void onStatusTimer() {
 
@@ -51,18 +86,20 @@ void setup() {
 	ledBar.init(A0, A1, A2); 
 	ledBar.animate(); 
 
-	ledRGB.init(4, 5, 6); 
+	ledRGB.init(6, 5, 4); 
 	ledRGB.animate();
 
 	soundPlayer.playCoin();
 
 	lifeCycleManager.attachRobotModel(robotModel); 
 	lifeCycleManager.attachRobotController(robotController); 
+	lifeCycleManager.attachIRMessaging(irMessaging); 
+
 	lifeCycleManager.setStatusTiming(1500);
 
 	
 	lifeCycleManager.onStatusTimer(&onStatusTimer);
-	
+	lifeCycleManager.onStatus(&onStatus); 
 	
 
 	/*
@@ -79,13 +116,13 @@ void loop() {
 
 	lifeCycleManager.tick(); 
 
+	//message = irMessaging.getIRMessage(); 
+	
+	//Serial.println(message.getRawData()); 
+	
 
-	/*
-	message.decode(irMessaging.getIRMessage()); 
-
-	if (message.isValid())
-		lifeCycleManager.handleMessage(message); 
-  */ 
+	//if (message.isValid()) 
+   
 
 }
 
