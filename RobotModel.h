@@ -13,7 +13,7 @@ class RobotModel {
     public:
     
 		RobotModel(); 
-        RobotModel(byte id, byte group) ;
+        RobotModel(byte group, byte id) ;
 
 
 		byte getGroup(); 

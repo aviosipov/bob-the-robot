@@ -10,36 +10,32 @@ IRMessaging::IRMessaging(byte txPin, byte rxPin) {
 	_txPin = txPin; 
 	_rxPin = rxPin; 
 
-	irRecv = new IRrecv(_rxPin);
+	_irRecv = new IRrecv(_rxPin);
+
 }
 
 void IRMessaging::enableRX()
-{
-	
-	irRecv->enableIRIn();
-	
+{	
+	_irRecv->enableIRIn();	
 }
 
-void IRMessaging::initTX()
-{
-}
+
 
 IRMessage IRMessaging::getIRMessage() {
 
-	IRMessage message;
+	
+	if (_irRecv->decode(&results)) {		
 
-	if (irRecv->decode(&results)) {		
-
-		message.decode(results.value); 
-		irRecv->resume(); 
+		_message.decode(results.value); 
+		_irRecv->resume(); 
 
 	} else {
 
-		message.decode(0); /// trigger invalid message 
+		_message.decode(0); /// trigger invalid message 
 		
 	}
 
-	return message;
+	return _message;
     
     
     
@@ -47,6 +43,7 @@ IRMessage IRMessaging::getIRMessage() {
 
 void IRMessaging::sendIRMessage(IRMessage message) {
 
-	unsigned long irData = message.encode(); 
-    
+	_irSend.sendSony(message.encode(), 32);			
+	enableRX();	
+	
 } 

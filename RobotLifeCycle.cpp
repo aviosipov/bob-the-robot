@@ -27,11 +27,11 @@ void RobotLifeCycle::_handleStatusTimer()
 void RobotLifeCycle::_checkForIRMessage()
 {
 		
-	IRMessage message = _irMessaging->getIRMessage() ;
+	_message = _irMessaging->getIRMessage() ;
 
-	if (message.isValid()) {
+	if (_message.isValid()) {
 
-		_callbackOnStatus(message);
+		_callbackOnStatus(_message);
 
 	}
 		
@@ -42,10 +42,9 @@ void RobotLifeCycle::_checkForIRMessage()
 void RobotLifeCycle::tick()
 {
 
+	_checkForIRMessage();
 	_handleStatusTimer(); 
-	_checkForIRMessage(); 
-
-
+	
 
 }
 
@@ -144,8 +143,7 @@ void RobotLifeCycle::handleMessage(IRMessage message)
 
 void RobotLifeCycle::attachRobotModel(RobotModel &robotModel)
 {
-	_robotModel = &robotModel; 
-	
+	_robotModel = &robotModel; 	
 }
 
 void RobotLifeCycle::attachRobotController(RobotController &robotController)

@@ -8,8 +8,13 @@ class IRMessaging {
         byte _txPin; 
 		byte _rxPin;
         
-		IRrecv *irRecv;  
+		IRrecv *_irRecv;  
+		IRsend _irSend;
+
+		IRMessage _message;
+
 		decode_results results;
+
 
     
 
@@ -18,7 +23,6 @@ class IRMessaging {
         IRMessaging(byte txPin, byte rxPin) ;
 
 		void enableRX();
-		void initTX(); 
         
         IRMessage getIRMessage() ; 
         void sendIRMessage(IRMessage message) ;

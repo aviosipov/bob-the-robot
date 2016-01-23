@@ -3,6 +3,13 @@
 #include "IRMessage.h"
  
 
+byte IRMessage::getID()
+{
+
+	return random(0, 255); 
+	
+}
+
 unsigned long IRMessage::hexToDec(String hexString)
 {
 

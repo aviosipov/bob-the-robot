@@ -8,7 +8,7 @@ RobotModel::RobotModel()
 	_group = 1; 
 }
 
-RobotModel::RobotModel(byte id, byte group) {
+RobotModel::RobotModel(byte group, byte id) {
 
 	_id = id;
 	_group = group; 	

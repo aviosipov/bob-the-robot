@@ -23,6 +23,9 @@ public:
 	byte param; 
 	byte receiver;  
 	byte id; 
+
+
+	byte getID(); 
 	
 	unsigned long hexToDec(String str); 
 	String decToHex(byte decValue, byte desiredStringLength); 

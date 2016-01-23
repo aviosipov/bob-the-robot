@@ -28,6 +28,7 @@ private:
 
 	unsigned long _lastStatusEvent;
 	short _statusIntervalDelay; 
+	IRMessage _message; 
 
 	RobotModel		*	_robotModel; 
 	RobotController *	_robotController; 
