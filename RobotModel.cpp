@@ -20,6 +20,26 @@ RobotModel::RobotModel(byte group, byte id) {
 
 }
 
+void RobotModel::setGroup(byte group)
+{
+	_group = group; 
+}
+
+void RobotModel::setID(byte id)
+{
+	_id = id; 
+}
+
+void RobotModel::setHealth(byte health)
+{
+	_health = health; 
+}
+
+void RobotModel::setHitPoints(byte hitPoints)
+{
+	_hitPoints = hitPoints; 
+}
+
 byte RobotModel::getGroup()
 {
 	return _group; 
@@ -28,6 +48,11 @@ byte RobotModel::getGroup()
 byte RobotModel::getID()
 {
 	return _id; 
+}
+
+byte RobotModel::getHitPoints()
+{
+	return _hitPoints;
 }
 
 

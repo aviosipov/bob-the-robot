@@ -8,12 +8,25 @@
 #define MESSAGE_TO_ALL			0
 
 
+/// admin stuff here 
+
+#define ADMIN_SET_ID			10 
+#define ADMIN_SET_GROUP			11 
+#define ADMIN_SET_HEALTH		12
+#define ADMIN_SET_HIT_POINTS	13
+#define ADMIN_GET_STATUS		14
+
+#define SENDER_ADMIN			15
+
+/// general commands 
+
 #define COMMAND_ATTACK			2
 #define COMMAND_HEAL			3 
 #define COMMAND_FOLLOW			4
 #define COMMAND_STATUS			5
 #define COMMAND_STATUS_TOWER	7
 
+#define LEDRGB_TIMOUT			1000 
 
 
 typedef void(*CallbackOnAttack)(IRMessage);
@@ -27,12 +40,15 @@ class RobotLifeCycle {
 private:
 
 	unsigned long _lastStatusEvent;
+	unsigned long _rgbStatusTimer; 
+
 	short _statusIntervalDelay; 
 	IRMessage _message; 
 
 	RobotModel		*	_robotModel; 
 	RobotController *	_robotController; 
 	IRMessaging		*	_irMessaging; 
+	LedRGBIndicator *	_ledRGB; 
 
 	CallbackOnStatusTimer _callbackOnStatusTimer;
 	CallbackOnAttack	_callbackOnAttack;
@@ -40,7 +56,7 @@ private:
 	CallbackOnHeal		_callbackOnHeal;
 
 
-	void _handleStatusTimer(); 
+	void _handleTimers(); 
 	void _checkForIRMessage(); 
 
 public:
@@ -69,7 +85,7 @@ public:
 	void attachRobotModel(RobotModel &robotModel); 
 	void attachRobotController(RobotController &robotController );  
 	void attachIRMessaging(IRMessaging &irMessaging); 
-
+	void attachLedRGB(LedRGBIndicator &ledRGB); 
 
 	
 	

@@ -3,6 +3,7 @@
 #include "IRMessaging.h" 
 #include "RobotController.h"
 #include "RobotModel.h"
+#include "LedRGBIndicator.h"
 #include "RobotLifeCycle.h"
 
 
@@ -10,9 +11,10 @@ RobotLifeCycle::RobotLifeCycle() {
 
 	_lastStatusEvent = 0; 
 	_statusIntervalDelay = 100;
+	_rgbStatusTimer = 0; 
 }
 
-void RobotLifeCycle::_handleStatusTimer()
+void RobotLifeCycle::_handleTimers()
 {
 	unsigned long currentTime = millis();
 
@@ -20,6 +22,13 @@ void RobotLifeCycle::_handleStatusTimer()
 		
 		_lastStatusEvent = currentTime; 
 		_callbackOnStatusTimer(); 
+
+	}
+
+	if ((currentTime - _rgbStatusTimer) > LEDRGB_TIMOUT && _rgbStatusTimer > 0 ) {
+
+		_rgbStatusTimer = 0; 
+		_ledRGB->allOff(); 
 
 	}
 }
@@ -30,7 +39,16 @@ void RobotLifeCycle::_checkForIRMessage()
 	_message = _irMessaging->getIRMessage() ;
 
 	if (_message.isValid()) {
+		
 
+		if (_message.group == _robotModel->getGroup()) {
+			_ledRGB->green(); 
+		}
+		else {
+			_ledRGB->red(); 
+		}
+
+		_rgbStatusTimer = millis(); 
 		_callbackOnStatus(_message);
 
 	}
@@ -43,7 +61,7 @@ void RobotLifeCycle::tick()
 {
 
 	_checkForIRMessage();
-	_handleStatusTimer(); 
+	_handleTimers(); 
 	
 
 }
@@ -154,6 +172,11 @@ void RobotLifeCycle::attachRobotController(RobotController &robotController)
 void RobotLifeCycle::attachIRMessaging(IRMessaging &irMessaging)
 {
 	_irMessaging = &irMessaging; 
+}
+
+void RobotLifeCycle::attachLedRGB(LedRGBIndicator & ledRGB)
+{
+	_ledRGB = &ledRGB; 
 }
 
 

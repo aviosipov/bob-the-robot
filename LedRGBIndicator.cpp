@@ -1,3 +1,4 @@
+#include "Constants.h"
 #include "Arduino.h" 
 #include "LedRGBIndicator.h"
 
@@ -38,6 +39,29 @@ void LedRGBIndicator::blue()
 {
 	allOff();
 	digitalWrite(_bPin, HIGH);
+}
+
+void LedRGBIndicator::blink(byte pin)
+{
+
+	
+
+	switch (pin) {
+		case PIN_RED: 
+			red(); 
+			break; 
+		case PIN_GREEN:
+			green();
+			break;
+		case PIN_BLUE:
+			blue(); 
+			break; 	
+	}
+
+	delay(BLINK_DELAY);
+	allOff(); 
+	delay(BLINK_DELAY); 
+
 }
 
 void LedRGBIndicator::animate()

@@ -15,13 +15,20 @@ class RobotModel {
 		RobotModel(); 
         RobotModel(byte group, byte id) ;
 
+		void setGroup(byte group);
+		void setID(byte id);
+		void setHealth(byte health); 
+		void setHitPoints(byte hitPoints);
+
 
 		byte getGroup(); 
 		byte getID(); 
+		int getHealth();
+		byte getHitPoints(); 
     
         void shoot() ;
         void takeHit(byte hitPoints) ;
-        int getHealth() ;   
+        
     
          
     

@@ -119,6 +119,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="IRMessage.h" />
     <ClInclude Include="IRMessaging.h">
       <FileType>CppCode</FileType>

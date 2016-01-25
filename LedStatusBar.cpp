@@ -1,3 +1,4 @@
+#include "Constants.h"
 #include "Arduino.h"
 #include "LedStatusBar.h"
 
@@ -18,7 +19,7 @@ void LedStatusBar::blink()
 {
 	setStatus(0, 0, 0); 	
 	setStatus(1, 1, 1);
-	delay(20); 
+	delay(BLINK_DELAY); 
 	setStatus(0, 0, 0);
 
 }
