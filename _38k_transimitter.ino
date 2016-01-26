@@ -11,7 +11,7 @@
 #include "IRMessage.h"
 #include "LedRGBIndicator.h"
 #include "RobotLifeCycle.h"
-
+#include "RobotAdmin.h"
 
 RobotController robotController; 
 RobotModel robotModel(1,7);
@@ -20,22 +20,28 @@ SoundPlayer soundPlayer(8);
 IRMessaging irMessaging(3, 2); 
 
 IRMessage message;
-IRMessage adminMessage; 
+IRMessage shootMessage; 
 
 LedRGBIndicator ledRGB; 
 RobotLifeCycle lifeCycleManager; 
+RobotAdmin robotAdmin; 
 
-String incomingData ;   // for incoming serial data
 
 
+void onAttack(IRMessage message) {
+	Serial.println("we're under attack"); 
+}
+
+void onHeal(IRMessage message) {
+}
 
 
 void onStatus(IRMessage message) {
 
+	/// message received 
 
-
-	Serial.print("group : "); 
-	Serial.print(message.group); 
+	Serial.print("group : ");
+	Serial.print(message.group);
 
 	Serial.print(" , sender : ");
 	Serial.print(message.sender);
@@ -51,6 +57,45 @@ void onStatus(IRMessage message) {
 
 	Serial.print(" , id : ");
 	Serial.println(message.id);
+
+
+	/// handle message 
+
+	if (message.group == robotModel.getGroup()) {
+
+		/// this is a friendly unit 
+
+	} else {
+
+		/// this is not a freindly unit, prepare attack command
+		/// if attack is possible 
+
+		if (robotModel.canShoot() == ROBOT_CAN_SHOOT) {
+
+			robotModel.shoot(); 			
+
+			shootMessage.group = robotModel.getGroup();
+			shootMessage.sender = robotModel.getID();
+			shootMessage.command = COMMAND_ATTACK;
+			shootMessage.param = robotModel.getHitPoints(); 
+			shootMessage.receiver = message.sender;
+			shootMessage.id = shootMessage.getID(); 
+
+			irMessaging.sendIRMessage(message);
+
+//			ledBar.shootAnimation(); 			
+	//		Serial.println("shoot!"); 
+
+		} 
+			
+		
+
+
+
+	}
+
+
+
 
 
 
@@ -94,12 +139,15 @@ void setup() {
 	lifeCycleManager.attachIRMessaging(irMessaging); 
 	lifeCycleManager.attachLedRGB(ledRGB); 
 
-	lifeCycleManager.setStatusTiming(220);
+	lifeCycleManager.setStatusTiming(250);
 
 	lifeCycleManager.onStatusTimer(&onStatusTimer);
 	lifeCycleManager.onStatus(&onStatus); 
-	
-	
+	lifeCycleManager.onAttack(&onAttack); 
+	lifeCycleManager.onHeal(&onHeal); 
+
+	robotAdmin.attachRobotModel(robotModel);
+	robotAdmin.attachLedRGB(ledRGB);
   
 }
 
@@ -108,75 +156,10 @@ void setup() {
 void loop() {
 
 	lifeCycleManager.tick(); 
-
-	/// read serial, for robot programming. later this will be implemented 
-	/// via rf or other protocol. 
-
-	if (Serial.available() > 0) {
-		
-		incomingData = Serial.readString();
-
-		if (incomingData == "st") {
-
-			Serial.println("robot status");
-			Serial.println("-------------------------");
-
-
-			Serial.print("group : ");
-			Serial.print(robotModel.getGroup());
-
-			Serial.print(" , id : ");
-			Serial.print(robotModel.getID()); 
-
-			Serial.print(" , health : ");
-			Serial.print(robotModel.getHealth());
-
-			Serial.print(" , hit points: ");
-			Serial.println(robotModel.getHitPoints());
-
-
-		} else {
-
-			/// try to decode command 
-			
-			String	command		= incomingData.substring(0, 2);
-			byte	param		= incomingData.substring(3, 6).toInt(); 
-
-			if (command == "gr") {
-
-				robotModel.setGroup(param); 
-
-			} else if (command == "id") {
-
-				robotModel.setID(param); 
-
-			} else if (command == "hl") {
-				robotModel.setHealth(param);
-			} else if (command == "hp") {
-				robotModel.setHitPoints(param);
-			}
-			else if (command == "??") {
-				Serial.println("format : [command,param] or [command param]");
-				Serial.println("command list : st , gr , ip , hl , hp , ??"); 
-			}
-			
-			ledRGB.blink(PIN_BLUE);
-			Serial.println("ok"); 
-		
+	robotAdmin.checkForSerialData(); 
 
 
 
-
-		}
-		
-/*		adminMessage.decode(adminMessage.hexToDec(incomingData)); 
-		
-		Serial.println(adminMessage.group);
-		Serial.println(adminMessage.id);
-*/		
-		
-
-	}
 
 }
 

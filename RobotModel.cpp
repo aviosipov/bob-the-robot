@@ -15,7 +15,7 @@ RobotModel::RobotModel(byte group, byte id) {
 
     _health = 100 ;  
     _hitPoints = 20 ; 
-    _hitDelay = 2000 ; 
+    _hitDelay = 500 ; 
     _lastShootTime = 0 ; 
 
 }
@@ -55,27 +55,33 @@ byte RobotModel::getHitPoints()
 	return _hitPoints;
 }
 
+byte RobotModel::canShoot()
+{
+
+	unsigned long currentTime = millis();
+
+	if ((currentTime - _lastShootTime) >= _hitDelay) {		
+		return ROBOT_CAN_SHOOT; 
+	}
+	else {
+		return ROBOT_CANNOT_SHOOT; 
+	}
+
+
+	
+}
+
 
 void RobotModel::shoot() {
 
-	unsigned long currentTime = millis() ; 
+	if (canShoot() == ROBOT_CAN_SHOOT) {
 
-	if ((currentTime - _lastShootTime) >= _hitDelay) {
-			
-		Serial.println("shoot!");
-		_lastShootTime = millis(); 
+		_lastShootTime = millis();
+		/// do other stuff ... 
 
 	}
-	else {
-
-		Serial.print(currentTime - _lastShootTime); 
-		Serial.print(" ");
-		Serial.println("no shoot"); 
-
-	}
-
-
-
+	
+	
 		
 }
 

@@ -126,6 +126,7 @@
     </ClInclude>
     <ClInclude Include="LedRGBIndicator.h" />
     <ClInclude Include="LedStatusBar.h" />
+    <ClInclude Include="RobotAdmin.h" />
     <ClInclude Include="RobotLifeCycle.h" />
     <ClInclude Include="RobotController.h">
       <FileType>CppCode</FileType>
@@ -141,6 +142,7 @@
     <ClCompile Include="IRMessaging.cpp" />
     <ClCompile Include="LedRGBIndicator.cpp" />
     <ClCompile Include="LedStatusBar.cpp" />
+    <ClCompile Include="RobotAdmin.cpp" />
     <ClCompile Include="RobotLifeCycle.cpp" />
     <ClCompile Include="RobotController.cpp" />
     <ClCompile Include="RobotModel.cpp" />

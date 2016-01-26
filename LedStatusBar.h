@@ -15,6 +15,7 @@ public:
 	void init(byte pin0, byte pin1, byte pin2);
 
 	void blink(); 
+	void shootAnimation(); 
 	void animate();  
 	void setStatus(byte pin0, byte pin1, byte pin2);
 

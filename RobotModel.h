@@ -1,3 +1,8 @@
+#define ROBOT_CANNOT_SHOOT	0
+#define ROBOT_CAN_SHOOT		1
+
+
+
 class RobotModel {
     
     private:
@@ -25,6 +30,8 @@ class RobotModel {
 		byte getID(); 
 		int getHealth();
 		byte getHitPoints(); 
+
+		byte canShoot();
     
         void shoot() ;
         void takeHit(byte hitPoints) ;

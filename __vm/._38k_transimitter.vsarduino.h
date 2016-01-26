@@ -86,6 +86,7 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portInputRegister(P)
 #define portModeRegister(P)
 #include <..\_38k_transimitter\_38k_transimitter.ino>
+#include <..\_38k_transimitter\Constants.h>
 #include <..\_38k_transimitter\IRMessage.cpp>
 #include <..\_38k_transimitter\IRMessage.h>
 #include <..\_38k_transimitter\IRMessaging.cpp>
@@ -94,6 +95,8 @@ extern "C" void __cxa_pure_virtual() {;}
 #include <..\_38k_transimitter\LedRGBIndicator.h>
 #include <..\_38k_transimitter\LedStatusBar.cpp>
 #include <..\_38k_transimitter\LedStatusBar.h>
+#include <..\_38k_transimitter\RobotAdmin.cpp>
+#include <..\_38k_transimitter\RobotAdmin.h>
 #include <..\_38k_transimitter\RobotController.cpp>
 #include <..\_38k_transimitter\RobotController.h>
 #include <..\_38k_transimitter\RobotLifeCycle.cpp>

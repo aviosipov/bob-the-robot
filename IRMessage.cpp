@@ -77,7 +77,8 @@ IRMessage::IRMessage()
 	command = 0;
 	param = 0;
 	receiver = 0;
-	id = 0;
+
+	id = getID();
 
 }
 

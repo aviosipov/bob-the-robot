@@ -24,6 +24,16 @@ void LedStatusBar::blink()
 
 }
 
+void LedStatusBar::shootAnimation()
+{
+	blink();
+	delay(25);
+	blink();
+	delay(25); 
+	blink(); 
+
+}
+
 void LedStatusBar::animate()
 {
 

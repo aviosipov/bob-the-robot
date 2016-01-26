@@ -49,7 +49,25 @@ void RobotLifeCycle::_checkForIRMessage()
 		}
 
 		_rgbStatusTimer = millis(); 
-		_callbackOnStatus(_message);
+
+		if (_message.command == COMMAND_STATUS) 
+			_callbackOnStatus(_message);
+
+		if (_message.command != COMMAND_STATUS) {
+
+			Serial.println("****");
+			Serial.println(_message.command);
+
+		}
+			
+
+		//if (_message.command == COMMAND_ATTACK && _message.group != _robotModel->getGroup())
+		if (_message.command == COMMAND_ATTACK)
+			_callbackOnAttack(_message); 
+
+		//if (_message.command == COMMAND_HEAL && _message.group == _robotModel->getGroup())
+		if (_message.command == COMMAND_HEAL)
+			_callbackOnHeal(_message); 
 
 	}
 		
