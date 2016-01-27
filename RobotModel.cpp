@@ -76,6 +76,7 @@ void RobotModel::shoot() {
 
 	if (canShoot() == ROBOT_CAN_SHOOT) {
 
+		_hitDelay = SHOOT_TIMER_DELAY + random(0, SHOOT_TIMER_RANDOM_FIX);
 		_lastShootTime = millis();
 		/// do other stuff ... 
 

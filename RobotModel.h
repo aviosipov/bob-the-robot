@@ -1,6 +1,8 @@
-#define ROBOT_CANNOT_SHOOT	0
-#define ROBOT_CAN_SHOOT		1
+#define ROBOT_CANNOT_SHOOT		0
+#define ROBOT_CAN_SHOOT			1
 
+#define SHOOT_TIMER_DELAY		350
+#define SHOOT_TIMER_RANDOM_FIX	150 
 
 
 class RobotModel {

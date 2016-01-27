@@ -10,7 +10,7 @@
 RobotLifeCycle::RobotLifeCycle() {
 
 	_lastStatusEvent = 0; 
-	_statusIntervalDelay = 100;
+	_statusIntervalDelay = 250;
 	_rgbStatusTimer = 0; 
 }
 
@@ -20,6 +20,10 @@ void RobotLifeCycle::_handleTimers()
 
 	if ((currentTime - _lastStatusEvent ) >= _statusIntervalDelay) {
 		
+		/// fix interval 
+
+		_statusIntervalDelay = 75 + random(0, STATUS_INTERVAL_RANDOM_FIX); 
+
 		_lastStatusEvent = currentTime; 
 		_callbackOnStatusTimer(); 
 

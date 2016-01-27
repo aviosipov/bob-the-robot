@@ -1,5 +1,7 @@
 #pragma once
 
+#define STATUS_INTERVAL_RANDOM_FIX	125
+
 #define UNIT_MAX_HEALTH			100 
 #define UNIT_HEALING_TRIGGER	45
 
