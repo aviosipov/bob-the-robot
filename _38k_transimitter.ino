@@ -21,20 +21,17 @@ IRMessaging irMessaging(3, 2);
 
 IRMessage message;
 
-
 LedRGBIndicator ledRGB;
 RobotLifeCycle lifeCycleManager;
 RobotAdmin robotAdmin;
 
 
 
-byte attackEnabled = 0;
-byte attackCounter = 0;
-
-
 void onAttack(IRMessage message) {
 
-	Serial.println("we're under attack");
+	soundPlayer.playGun(); 
+
+	Serial.println("_hit");
 	robotModel.takeHit(message.param); 
 	
 	/// update health led bar 
@@ -64,22 +61,22 @@ void onStatus(IRMessage message) {
 
 	/// message received 
 
-	Serial.print("group : ");
+	Serial.print("g:");
 	Serial.print(message.group);
 
-	Serial.print(" , sender : ");
+	Serial.print(", s:");
 	Serial.print(message.sender);
 
-	Serial.print(" , command : ");
+	Serial.print(", cmd:");
 	Serial.print(message.command);
 
-	Serial.print(" , param : ");
+	Serial.print(" , prm:");
 	Serial.print(message.param);
 
-	Serial.print(" , receiver : ");
+	Serial.print(" , rcv:");
 	Serial.print(message.receiver);
 
-	Serial.print(" , id : ");
+	Serial.print(" , id:");
 	Serial.println(message.id);
 
 
@@ -97,13 +94,13 @@ void onStatus(IRMessage message) {
 
 		if (robotModel.canShoot() == ROBOT_CAN_SHOOT) {
 
-			robotModel.shoot();
-			//ledBar.shootAnimation();
-			ledRGB.blink(PIN_BLUE); 
-			attackCounter = 3;
+			robotModel.shoot();			
+			ledRGB.blink(PIN_BLUE); 	
+			soundPlayer.playCoin();
 
-		}
+			Serial.println("_sht"); 
 
+		} 
 
 	}
 
@@ -117,27 +114,21 @@ void onStatusTimer() {
 	message.sender = robotModel.getID();
 	message.id = message.getID();
 
-	if (attackEnabled == 1 && attackCounter > 0) {
 
-		attackEnabled = 0;
-
-		message.command = COMMAND_ATTACK;
-		message.param = robotModel.getHitPoints();
-		//message.receiver = message.sender;		
-
-	}
-	else {
+	if (robotModel.isAttackMode() == ROBOT_MODE_NORMAL) {
 
 		message.command = COMMAND_STATUS;
 		message.param = robotModel.getHealth();
 		message.receiver = MESSAGE_TO_ALL;
 
-		if (attackCounter > 0 && attackEnabled == 0) {
 
-			attackEnabled = 1;
-			attackCounter--;
+	}
+	else if (robotModel.isAttackMode() == ROBOT_MODE_ATTACK) {
 
-		}
+		message.command = COMMAND_ATTACK;
+		message.param = robotModel.getHitPoints();
+
+		Serial.println("_atk");
 
 	}
 
@@ -160,7 +151,13 @@ void setup() {
 	ledRGB.init(6, 5, 4);
 	ledRGB.animate();
 
+
 	soundPlayer.playCoin();
+	//soundPlayer.playGun();
+
+//	soundPlayer.playCoin(); delay(500);
+//	soundPlayer.playGun(); delay(500);
+//	soundPlayer.noise(400,400); 
 
 	ledBar.setStatus(1, 1, 1);
 
@@ -169,7 +166,7 @@ void setup() {
 	lifeCycleManager.attachIRMessaging(irMessaging);
 	lifeCycleManager.attachLedRGB(ledRGB);
 
-	lifeCycleManager.setStatusTiming(250);
+	
 
 	lifeCycleManager.onStatusTimer(&onStatusTimer);
 	lifeCycleManager.onStatus(&onStatus);

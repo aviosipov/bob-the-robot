@@ -10,7 +10,7 @@
 RobotLifeCycle::RobotLifeCycle() {
 
 	_lastStatusEvent = 0; 
-	_statusIntervalDelay = 250;
+	_statusIntervalDelay = STATUS_INVERVAL_DELAY ;
 	_rgbStatusTimer = 0; 
 }
 
@@ -22,7 +22,7 @@ void RobotLifeCycle::_handleTimers()
 		
 		/// fix interval 
 
-		_statusIntervalDelay = 75 + random(0, STATUS_INTERVAL_RANDOM_FIX); 
+		_statusIntervalDelay = STATUS_INVERVAL_DELAY + random(0, STATUS_INTERVAL_RANDOM_FIX);
 
 		_lastStatusEvent = currentTime; 
 		_callbackOnStatusTimer(); 
@@ -63,13 +63,12 @@ void RobotLifeCycle::_checkForIRMessage()
 			Serial.println(_message.command);
 
 		}
-			
-
-		//if (_message.command == COMMAND_ATTACK && _message.group != _robotModel->getGroup())
+		
+		
 		if (_message.command == COMMAND_ATTACK)
 			_callbackOnAttack(_message); 
 
-		//if (_message.command == COMMAND_HEAL && _message.group == _robotModel->getGroup())
+		
 		if (_message.command == COMMAND_HEAL)
 			_callbackOnHeal(_message); 
 
@@ -108,10 +107,6 @@ void RobotLifeCycle::onStatusTimer(CallbackOnStatusTimer callback)
 	_callbackOnStatusTimer = callback; 
 }
 
-void RobotLifeCycle::setStatusTiming(short interval)
-{
-	_statusIntervalDelay = interval;
-}
 
 
 

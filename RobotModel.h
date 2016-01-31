@@ -1,8 +1,12 @@
+#define SHOOT_TIMER_DELAY			800
+#define SHOOT_MODE_DELAY			500 
+
+#define ROBOT_MODE_NORMAL			1
+#define ROBOT_MODE_ATTACK			2
+#define ROBOT_MODE_HEAL				4
+
 #define ROBOT_CANNOT_SHOOT		0
 #define ROBOT_CAN_SHOOT			1
-
-#define SHOOT_TIMER_DELAY		350
-#define SHOOT_TIMER_RANDOM_FIX	150 
 
 
 class RobotModel {
@@ -13,9 +17,9 @@ class RobotModel {
 		byte _hitPoints ;
 		byte _id;
 		byte _group;
-
-		int _hitDelay;
-		unsigned long _lastShootTime;        
+		
+		unsigned long _lastShootTimer;        
+		unsigned long _shootModeTimer;
     
     public:
     
@@ -33,7 +37,10 @@ class RobotModel {
 		int getHealth();
 		byte getHitPoints(); 
 
+
 		byte canShoot();
+		byte isAttackMode(); 
+
     
         void shoot() ;
         void takeHit(byte hitPoints) ;
