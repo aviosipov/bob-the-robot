@@ -1,5 +1,5 @@
 #define SHOOT_TIMER_DELAY			800
-#define SHOOT_MODE_DELAY			500 
+#define SHOOT_MODE_DELAY			750 
 
 #define ROBOT_MODE_NORMAL			1
 #define ROBOT_MODE_ATTACK			2

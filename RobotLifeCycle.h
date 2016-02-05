@@ -1,13 +1,12 @@
 #pragma once
 
-#define STATUS_INVERVAL_DELAY		100
-#define STATUS_INTERVAL_RANDOM_FIX	50
+#define STATUS_INVERVAL_DELAY		200
+#define STATUS_INTERVAL_RANDOM_FIX	25
 
-#define UNIT_MAX_HEALTH			100 
-#define UNIT_HEALING_TRIGGER	45
+#define UNIT_MAX_HEALTH			15 
+#define UNIT_HEALING_TRIGGER	5
 
 #define GROUP_FRIENDLY			1 
-
 #define MESSAGE_TO_ALL			0
 
 
@@ -29,7 +28,7 @@
 #define COMMAND_STATUS			5
 #define COMMAND_STATUS_TOWER	7
 
-#define LEDRGB_TIMOUT			1000 
+#define LEDRGB_TIMOUT			250 
 
 
 typedef void(*CallbackOnAttack)(IRMessage);
@@ -84,7 +83,7 @@ public:
 	RobotLifeCycle(); 
 
 
-	void handleMessage(IRMessage message); 
+	
 	void attachRobotModel(RobotModel &robotModel); 
 	void attachRobotController(RobotController &robotController );  
 	void attachIRMessaging(IRMessaging &irMessaging); 

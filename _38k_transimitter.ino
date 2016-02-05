@@ -29,21 +29,21 @@ RobotAdmin robotAdmin;
 
 void onAttack(IRMessage message) {
 
-	soundPlayer.playGun(); 
+//	soundPlayer.explosion(); 
 
-	Serial.println("_hit");
+	Serial.println("_ht");
 	robotModel.takeHit(message.param); 
 	
 	/// update health led bar 
 
-	if (robotModel.getHealth() >= 66) {
+	if (robotModel.getHealth() >= 10) {
 		ledBar.setStatus(1, 1, 1); 
 
-	} 	else if (robotModel.getHealth() >= 33) {
+	} 	else if (robotModel.getHealth() >= 7) {
 
 		ledBar.setStatus(0, 1, 1);
 
-	} 	else if (robotModel.getHealth() >= 10) {
+	} 	else if (robotModel.getHealth() >= 4) {
 
 		ledBar.setStatus(0, 0, 1);
 	}
@@ -61,23 +61,22 @@ void onStatus(IRMessage message) {
 
 	/// message received 
 
-	Serial.print("g:");
+	
 	Serial.print(message.group);
-
-	Serial.print(", s:");
+	Serial.print("/");
 	Serial.print(message.sender);
 
-	Serial.print(", cmd:");
+	Serial.print(" ");
 	Serial.print(message.command);
 
-	Serial.print(" , prm:");
+	Serial.print("/");
 	Serial.print(message.param);
 
-	Serial.print(" , rcv:");
-	Serial.print(message.receiver);
+//	Serial.print(" , rcv:");
+//	Serial.print(message.receiver);
 
-	Serial.print(" , id:");
-	Serial.println(message.id);
+	Serial.print(" ");
+	Serial.println(random(0,255));
 
 
 	/// handle message 
@@ -94,9 +93,8 @@ void onStatus(IRMessage message) {
 
 		if (robotModel.canShoot() == ROBOT_CAN_SHOOT) {
 
-			robotModel.shoot();			
-			ledRGB.blink(PIN_BLUE); 	
-			soundPlayer.playCoin();
+			robotModel.shoot();						
+//			soundPlayer.playGun(); 
 
 			Serial.println("_sht"); 
 
@@ -109,6 +107,7 @@ void onStatus(IRMessage message) {
 }
 
 void onStatusTimer() {
+
 
 	message.group = robotModel.getGroup();
 	message.sender = robotModel.getID();
@@ -132,8 +131,10 @@ void onStatusTimer() {
 
 	}
 
-
+	
 	irMessaging.sendIRMessage(message);
+
+
 
 }
 
@@ -142,23 +143,16 @@ void setup() {
 
 
 
-	Serial.begin(56000);
+	Serial.begin(9600);
 	Serial.println("Program Started");
 
 	ledBar.init(A0, A1, A2);
 	ledBar.animate();
 
 	ledRGB.init(6, 5, 4);
-	ledRGB.animate();
-
-
-	soundPlayer.playCoin();
-	//soundPlayer.playGun();
-
-//	soundPlayer.playCoin(); delay(500);
-//	soundPlayer.playGun(); delay(500);
-//	soundPlayer.noise(400,400); 
-
+		
+	
+	soundPlayer.playGun();
 	ledBar.setStatus(1, 1, 1);
 
 	lifeCycleManager.attachRobotModel(robotModel);

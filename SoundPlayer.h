@@ -105,7 +105,9 @@ public:
 	void playCoin(); 
 	void play1UP(); 
 
-	void noise(int freq, int duration);
+	void explosion();
+
+	void noise(int freq, int var, int duration);
 
 };
 

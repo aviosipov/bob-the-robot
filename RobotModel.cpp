@@ -4,17 +4,19 @@
 
 RobotModel::RobotModel()
 {
-	_id = random(0,15); 
+	_id = random(0,7); 
 	_group = 1; 
 }
 
 RobotModel::RobotModel(byte group, byte id) {
 
-	_id = id;
-	_group = group; 	
+	setID(id); 
 
-    _health = 100 ;  
-    _hitPoints = 20 ;     
+	//_id = id;
+	//_group = group; 	
+
+    _health = 15 ;  
+    _hitPoints = 1 ;     
 
     _lastShootTimer = 0 ; 
 	_shootModeTimer = 0;
@@ -29,6 +31,10 @@ void RobotModel::setGroup(byte group)
 void RobotModel::setID(byte id)
 {
 	_id = id; 
+
+	if (id <= 7) setGroup(1);
+	else setGroup(2); 
+	
 }
 
 void RobotModel::setHealth(byte health)

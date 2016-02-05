@@ -16,15 +16,17 @@ IRMessaging::IRMessaging(byte txPin, byte rxPin) {
 
 void IRMessaging::enableRX()
 {	
-	_irRecv->enableIRIn();	
+	_irRecv->enableIRIn();		
 }
 
 
 
 IRMessage IRMessaging::getIRMessage() {
-
+	
 	
 	if (_irRecv->decode(&results)) {		
+
+		//Serial.println(results.value);
 
 		_message.decode(results.value); 
 		_irRecv->resume(); 
@@ -43,7 +45,12 @@ IRMessage IRMessaging::getIRMessage() {
 
 void IRMessaging::sendIRMessage(IRMessage message) {
 
-	_irSend.sendSony(message.encode(), 32);			
-	enableRX();	
+
+	unsigned long messageData = message.encode(); 
+	_irSend.sendSony(messageData, message.getMessageLength());
 	
+	enableRX();	
+
+	
+
 } 

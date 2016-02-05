@@ -11,13 +11,10 @@ SoundPlayer::SoundPlayer(byte speakerPin)
 
 void SoundPlayer::playGun()
 {
-	NewTone(_speakerPin, NOTE_G4, 35);
-	delay(35);
-	NewTone(_speakerPin, NOTE_G5, 35);
-	delay(35);
-	NewTone(_speakerPin, NOTE_G6, 35);
-	delay(35);
-	noNewTone(_speakerPin);
+	
+	noise(NOTE_E6, 100, 20);
+	noise(NOTE_G6, 100, 50);
+	
 }
 
 void SoundPlayer::playCoin()
@@ -45,17 +42,29 @@ void SoundPlayer::play1UP()
 	noNewTone(_speakerPin);
 }
 
-void SoundPlayer::noise(int freq, int duration)
+void SoundPlayer::explosion()
+{
+	noise(700, 40, 20);
+	noise(450, 30, 15);
+	noise(300, 20, 10);
+	noise(250, 20, 10);
+	noise(120, 30, 80);
+	noise(100, 40, 80);
+
+}
+
+void SoundPlayer::noise(int freq, int var, int duration)
 {
 	
-	int low = freq - 100;
-	int high = freq + 100;
+	int low = freq - var;
+	int high = freq + var;
 
 	unsigned long time = millis();
+
 	while (millis() - time <= duration) {
-		NewTone(_speakerPin, random(low, high));
-		//NewTone(_speakerPin, freq , 35);
-		NewTone(_speakerPin, freq);
+
+		NewTone(_speakerPin, random(low, high));		
+		
 	}
 	noNewTone(_speakerPin);
 	

@@ -1,7 +1,7 @@
 #pragma once
 
-#define validMessageCodeMin 268435456  // min in hex 10000000 ( 1st group ) 
-#define validMessageCodeMax 805306367  // max in hex 2FFFFFFF ( 2nd group )
+#define validMessageCodeMin 4096  // min in hex 1000 
+#define validMessageCodeMax 65535  // max in hex FFFF
 
 
 
@@ -12,6 +12,9 @@ private:
 
 	bool _isValid; 
 	unsigned long _rawData; 
+
+
+	byte _messageLength; 
 	
 
 
@@ -24,6 +27,7 @@ public:
 	byte receiver;  
 	byte id; 
 
+	byte getMessageLength(); 
 
 	byte getID(); 
 	

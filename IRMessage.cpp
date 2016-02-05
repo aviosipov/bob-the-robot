@@ -3,11 +3,14 @@
 #include "IRMessage.h"
  
 
+byte IRMessage::getMessageLength()
+{
+	return _messageLength; 	
+}
+
 byte IRMessage::getID()
 {
-
-	return random(0, 255); 
-	
+	return random(0, 255); 	
 }
 
 unsigned long IRMessage::hexToDec(String hexString)
@@ -88,16 +91,24 @@ void IRMessage::decode(unsigned long message)
 
 	_rawData = message; 
 
+	
 	if (message >= validMessageCodeMin && message <= validMessageCodeMax) {
 
 		String tmp = String(message, HEX);
+		
+		sender = hexToDec((String)tmp.charAt(0));
+		command = hexToDec((String)tmp.charAt(1));
+		param = hexToDec((String)tmp.charAt(2));		
+		receiver = hexToDec((String)tmp.charAt(3));
 
-		group = hexToDec((String)tmp.charAt(0));
-		sender = hexToDec((String)tmp.charAt(1));
-		command = hexToDec((String)tmp.charAt(2));
-		param = hexToDec(tmp.substring(3, 5));
-		receiver = hexToDec((String)tmp.charAt(5));
-		id = hexToDec(tmp.substring(6, 8));
+		if (sender <= 7) group = 1;
+		else group = 2; 
+
+		//group = hexToDec((String)tmp.charAt(0));		
+		//param = hexToDec(tmp.substring(3, 5));
+		//param = hexToDec(tmp.substring(3, 5));
+		//receiver = hexToDec((String)tmp.charAt(3));
+		//id = hexToDec(tmp.substring(6, 8));
 
 		_isValid = true; 
 
@@ -114,7 +125,11 @@ void IRMessage::decode(unsigned long message)
 unsigned long IRMessage::encode()
 {
 
-	String s = decToHex(group, 1) + decToHex(sender, 1) + decToHex(command, 1) + decToHex(param, 2) + decToHex(receiver, 1) + decToHex(id, 2); 
+	//String s = decToHex(group, 1) + decToHex(sender, 1) + decToHex(command, 1) + decToHex(param, 2) + decToHex(receiver, 1) + decToHex(id, 2);
+
+	String s = decToHex(sender, 1) + decToHex(command, 1) + decToHex(param, 1) + decToHex(receiver, 1); 
+	_messageLength = s.length() * 4; 
+
 	return hexToDec(s); 
 
 }

@@ -20,11 +20,9 @@ void RobotLifeCycle::_handleTimers()
 
 	if ((currentTime - _lastStatusEvent ) >= _statusIntervalDelay) {
 		
-		/// fix interval 
-
 		_statusIntervalDelay = STATUS_INVERVAL_DELAY + random(0, STATUS_INTERVAL_RANDOM_FIX);
-
 		_lastStatusEvent = currentTime; 
+
 		_callbackOnStatusTimer(); 
 
 	}
@@ -42,8 +40,7 @@ void RobotLifeCycle::_checkForIRMessage()
 		
 	_message = _irMessaging->getIRMessage() ;
 
-	if (_message.isValid()) {
-		
+	if (_message.isValid()) {		
 
 		if (_message.group == _robotModel->getGroup()) {
 			_ledRGB->green(); 
@@ -57,22 +54,25 @@ void RobotLifeCycle::_checkForIRMessage()
 		if (_message.command == COMMAND_STATUS) 
 			_callbackOnStatus(_message);
 
-		if (_message.command != COMMAND_STATUS) {
 
-			Serial.println("****");
-			Serial.println(_message.command);
-
-		}
-		
-		
 		if (_message.command == COMMAND_ATTACK)
 			_callbackOnAttack(_message); 
 
-		
+
 		if (_message.command == COMMAND_HEAL)
 			_callbackOnHeal(_message); 
 
+
+/*		if (_message.command != COMMAND_STATUS) {
+
+			Serial.println("?");
+			Serial.println(_message.command);
+
+		} */
+
 	}
+
+
 		
 
 
@@ -83,6 +83,7 @@ void RobotLifeCycle::tick()
 
 	_checkForIRMessage();
 	_handleTimers(); 
+
 	
 
 }
@@ -108,73 +109,6 @@ void RobotLifeCycle::onStatusTimer(CallbackOnStatusTimer callback)
 }
 
 
-
-
-
-void RobotLifeCycle::handleMessage(IRMessage message)
-{
-
-	switch (message.command) {
-
-		case COMMAND_STATUS:
-
-			/// friend or enemy? 
-			
-			if (message.group == GROUP_FRIENDLY) {
-
-				/// this is a status from a freindly unit, check 
-				/// if this unit need healing 
-
-				if (message.param <= UNIT_HEALING_TRIGGER ) {
-					
-					/// 1. send healing command 
-					/// 2. check that health has changed
-					///
-					/// * maybe pass this to another class
-					///   that will take care for the healing 
-					///   functionality
-
-				}
-
-			}
-			else {
-
-				/// well this is not a friendly unit, attack!!!
-				/// attack will take place by :
-				/// 1. send attack command 
-				/// 2. check that the unit has been damaged 
-				/// 3. decide whatever chase or run away 
-
-			}
-
-			break;
-
-		case COMMAND_STATUS_TOWER:
-
-			/// if this is a friendly tower, check whatever
-			/// healing is required 
-
-
-
-			/// this is an enemy tower, which means that i can not
-			/// be passed. 
-
-
-			break;
-		case COMMAND_ATTACK:
-
-			/// react to attack by taking damage 
-
-			break; 
-		case COMMAND_FOLLOW:
-			break; 
-		case COMMAND_HEAL:
-			break; 
-
-	}
-
-
-}
 
 void RobotLifeCycle::attachRobotModel(RobotModel &robotModel)
 {
