@@ -1,12 +1,17 @@
-#define SHOOT_TIMER_DELAY			800
-#define SHOOT_MODE_DELAY			750 
+#define SHOOT_TIMER_DELAY			1000
+#define SHOOT_MODE_DELAY			350 
 
 #define ROBOT_MODE_NORMAL			1
 #define ROBOT_MODE_ATTACK			2
 #define ROBOT_MODE_HEAL				4
 
-#define ROBOT_CANNOT_SHOOT		0
-#define ROBOT_CAN_SHOOT			1
+#define ROBOT_CANNOT_SHOOT			0
+#define ROBOT_CAN_SHOOT				1
+
+#define ROBOT_IS_ACTIVE_LEVEL		10
+#define ROBOT_ACTIVE				1
+#define ROBOT_NOT_ACTIVE			0
+
 
 
 class RobotModel {
@@ -24,7 +29,7 @@ class RobotModel {
     public:
     
 		RobotModel(); 
-        RobotModel(byte group, byte id) ;
+        RobotModel(byte id) ;
 
 		void setGroup(byte group);
 		void setID(byte id);
@@ -40,6 +45,9 @@ class RobotModel {
 
 		byte canShoot();
 		byte isAttackMode(); 
+
+
+		byte isActive(); 
 
     
         void shoot() ;

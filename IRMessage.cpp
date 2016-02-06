@@ -97,9 +97,9 @@ void IRMessage::decode(unsigned long message)
 		String tmp = String(message, HEX);
 		
 		sender = hexToDec((String)tmp.charAt(0));
-		command = hexToDec((String)tmp.charAt(1));
-		param = hexToDec((String)tmp.charAt(2));		
-		receiver = hexToDec((String)tmp.charAt(3));
+		command = hexToDec((String)tmp.charAt(1));		
+		param = hexToDec(tmp.substring(2, 4));
+		receiver = hexToDec((String)tmp.charAt(4));
 
 		if (sender <= 7) group = 1;
 		else group = 2; 
@@ -127,7 +127,7 @@ unsigned long IRMessage::encode()
 
 	//String s = decToHex(group, 1) + decToHex(sender, 1) + decToHex(command, 1) + decToHex(param, 2) + decToHex(receiver, 1) + decToHex(id, 2);
 
-	String s = decToHex(sender, 1) + decToHex(command, 1) + decToHex(param, 1) + decToHex(receiver, 1); 
+	String s = decToHex(sender, 1) + decToHex(command, 1) + decToHex(param, 2) + decToHex(receiver, 1); 
 	_messageLength = s.length() * 4; 
 
 	return hexToDec(s); 

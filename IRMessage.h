@@ -1,7 +1,7 @@
 #pragma once
 
-#define validMessageCodeMin 4096  // min in hex 1000 
-#define validMessageCodeMax 65535  // max in hex FFFF
+#define validMessageCodeMin 65536  // min in hex 10000 
+#define validMessageCodeMax 1048575  // max in hex FFFFF
 
 
 

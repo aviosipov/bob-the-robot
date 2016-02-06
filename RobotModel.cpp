@@ -8,14 +8,11 @@ RobotModel::RobotModel()
 	_group = 1; 
 }
 
-RobotModel::RobotModel(byte group, byte id) {
+RobotModel::RobotModel(byte id) {
 
 	setID(id); 
 
-	//_id = id;
-	//_group = group; 	
-
-    _health = 15 ;  
+    _health = 100 ;  
     _hitPoints = 1 ;     
 
     _lastShootTimer = 0 ; 
@@ -70,7 +67,7 @@ byte RobotModel::canShoot()
 
 	unsigned long currentTime = millis();
 
-	if ((currentTime - _lastShootTimer) >= SHOOT_TIMER_DELAY ) {
+	if ((currentTime - _lastShootTimer) >= SHOOT_TIMER_DELAY && isActive() == ROBOT_ACTIVE  ) {
 		return ROBOT_CAN_SHOOT;
 	}
 	else {
@@ -83,7 +80,7 @@ byte RobotModel::isAttackMode()
 {
 	unsigned long currentTime = millis();
 
-	if ((currentTime - _shootModeTimer) < SHOOT_MODE_DELAY ) {
+	if ((currentTime - _shootModeTimer) < SHOOT_MODE_DELAY && isActive() == ROBOT_ACTIVE ) {
 		return ROBOT_MODE_ATTACK;
 	}
 	else {
@@ -92,10 +89,18 @@ byte RobotModel::isAttackMode()
 
 }
 
+byte RobotModel::isActive()
+{
+
+	if (_health >= ROBOT_IS_ACTIVE_LEVEL) return ROBOT_ACTIVE; 
+	else return ROBOT_NOT_ACTIVE; 
+
+}
+
 
 void RobotModel::shoot() {
 
-	if (canShoot() == ROBOT_CAN_SHOOT && _health > 12) {
+	if (canShoot() == ROBOT_CAN_SHOOT && isActive() == ROBOT_ACTIVE  ) {
 
 		_lastShootTimer = millis();		
 		_shootModeTimer = millis();
@@ -110,7 +115,7 @@ void RobotModel::shoot() {
 
 void RobotModel::takeHit(byte hitPoints) {
 
-	if (_health >= hitPoints) {
+	if (_health >= hitPoints  && isActive() == ROBOT_ACTIVE ) {
 		_health -= hitPoints;
 	}
 		

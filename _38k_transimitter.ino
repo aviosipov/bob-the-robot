@@ -14,7 +14,7 @@
 #include "RobotAdmin.h"
 
 RobotController robotController;
-RobotModel robotModel(1, 7);
+RobotModel robotModel(5);
 LedStatusBar ledBar;
 SoundPlayer soundPlayer(8);
 IRMessaging irMessaging(3, 2);
@@ -29,21 +29,21 @@ RobotAdmin robotAdmin;
 
 void onAttack(IRMessage message) {
 
-//	soundPlayer.explosion(); 
+	//soundPlayer.explosion(); 
 
 	Serial.println("_ht");
 	robotModel.takeHit(message.param); 
 	
 	/// update health led bar 
 
-	if (robotModel.getHealth() >= 10) {
+	if (robotModel.getHealth() >= 85) {
 		ledBar.setStatus(1, 1, 1); 
 
-	} 	else if (robotModel.getHealth() >= 7) {
+	} 	else if (robotModel.getHealth() >= 50) {
 
 		ledBar.setStatus(0, 1, 1);
 
-	} 	else if (robotModel.getHealth() >= 4) {
+	} 	else if (robotModel.getHealth() >= 20) {
 
 		ledBar.setStatus(0, 0, 1);
 	}
@@ -85,8 +85,7 @@ void onStatus(IRMessage message) {
 
 		/// this is a friendly unit 
 
-	}
-	else {
+	} else {
 
 		/// this is not a freindly unit, prepare attack command
 		/// if attack is possible 
@@ -96,7 +95,7 @@ void onStatus(IRMessage message) {
 			robotModel.shoot();						
 //			soundPlayer.playGun(); 
 
-			Serial.println("_sht"); 
+//			Serial.println("_sht"); 
 
 		} 
 
@@ -126,14 +125,15 @@ void onStatusTimer() {
 
 		message.command = COMMAND_ATTACK;
 		message.param = robotModel.getHitPoints();
-
-		Serial.println("_atk");
+		
 
 	}
-
 	
 	irMessaging.sendIRMessage(message);
 
+	Serial.print(message.command);
+	Serial.print("/");
+	Serial.println(message.param); 
 
 
 }

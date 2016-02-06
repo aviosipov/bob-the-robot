@@ -48,8 +48,8 @@ void SoundPlayer::explosion()
 	noise(450, 30, 15);
 	noise(300, 20, 10);
 	noise(250, 20, 10);
-	noise(120, 30, 80);
-	noise(100, 40, 80);
+	noise(120, 30, 50);
+	noise(100, 40, 50);
 
 }
 
