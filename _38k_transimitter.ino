@@ -13,8 +13,25 @@
 #include "RobotLifeCycle.h"
 #include "RobotAdmin.h"
 
+/// nrf24 radio stuff ///////////////////////////
+
+#include <SPI.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+
+
+RF24 radio(7, 8);
+const byte rxAddr[6] = "00001";
+int msg[1];
+
+
+
+/////////////////////////////////////////////////
+
+
+
 RobotController robotController;
-RobotModel robotModel(5);
+RobotModel robotModel(random(8,15));
 LedStatusBar ledBar;
 SoundPlayer soundPlayer(8);
 IRMessaging irMessaging(3, 2);
@@ -26,8 +43,34 @@ RobotLifeCycle lifeCycleManager;
 RobotAdmin robotAdmin;
 
 
+String prepareMessage(String attr , String value) {
+
+	String  sender = "bob" +  String(robotModel.getID()) + ".";
+	return sender + attr + "," + value ;
+
+}
+
+
+void sendRFMessage(String attr , String value ) {
+
+	String theMessage = prepareMessage( attr , value );
+	int messageSize = theMessage.length();
+
+	for (int i = 0; i < messageSize; i++) {
+		int charToSend[1];
+		charToSend[0] = theMessage.charAt(i);
+		radio.write(charToSend, 1);
+	}
+
+	msg[0] = 2;
+	radio.write(msg, 1);
+
+}
+
 
 void onAttack(IRMessage message) {
+
+	sendRFMessage("mode", "hit");
 
 	//soundPlayer.explosion(); 
 
@@ -120,20 +163,24 @@ void onStatusTimer() {
 		message.receiver = MESSAGE_TO_ALL;
 
 
+		sendRFMessage("mode", "ok");
+		sendRFMessage("health", String(robotModel.getHealth())); 
+
+
 	}
 	else if (robotModel.isAttackMode() == ROBOT_MODE_ATTACK) {
 
 		message.command = COMMAND_ATTACK;
 		message.param = robotModel.getHitPoints();
 		
+		sendRFMessage("mode", "atk");
 
 	}
 	
 	irMessaging.sendIRMessage(message);
 
-	Serial.print(message.command);
-	Serial.print("/");
-	Serial.println(message.param); 
+
+	
 
 
 }
@@ -141,6 +188,20 @@ void onStatusTimer() {
 
 void setup() {
 
+	/// setup rf24 radio  //////////////////////////////////
+
+	radio.begin();
+	radio.setPALevel(RF24_PA_MIN);
+	radio.setDataRate(RF24_1MBPS);
+	radio.setRetries(15, 15);
+	radio.openWritingPipe(rxAddr);
+	radio.stopListening();
+
+	////////////////////////////////////////////////////////
+
+
+
+	/// prepare robots
 
 
 	Serial.begin(9600);

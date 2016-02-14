@@ -4,7 +4,7 @@
 
 RobotModel::RobotModel()
 {
-	_id = random(0,7); 
+	_id = random(1,7); 
 	_group = 1; 
 }
 
