@@ -1,3 +1,4 @@
+#include <Wire.h>
 #include <NewTone.h>
 #include <IRremote.h>
 #include <IRremoteInt.h>
@@ -135,7 +136,12 @@ void onStatus(IRMessage message) {
 
 		if (robotModel.canShoot() == ROBOT_CAN_SHOOT) {
 
-			robotModel.shoot();						
+			robotModel.shoot();			
+
+			Wire.beginTransmission(9); // transmit to device #9
+			Wire.write(5);              // sends 5 - shoot command 
+			Wire.endTransmission();    // stop transmitting
+
 //			soundPlayer.playGun(); 
 
 //			Serial.println("_sht"); 
@@ -187,6 +193,11 @@ void onStatusTimer() {
 
 
 void setup() {
+
+	/// setup wrire ////////////////////////////////////////
+
+	Wire.begin();
+
 
 	/// setup rf24 radio  //////////////////////////////////
 
