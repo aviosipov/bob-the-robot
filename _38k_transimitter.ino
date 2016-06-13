@@ -131,7 +131,7 @@ void onStatus(IRMessage message) {
 
 	} else {
 
-		/// this is not a freindly unit, prepare attack command
+		/// this is not a friendly unit, prepare attack command
 		/// if attack is possible 
 
 		if (robotModel.canShoot() == ROBOT_CAN_SHOOT) {

@@ -21,7 +21,7 @@ unsigned long IRMessage::hexToDec(String hexString)
 	This method/service is used to decode IR messages and decode message
 	attributes. 
 
-	IR message is 8 bit hex string, with the follwoing format [ group , sender , command , param , receiver , id ] 
+	IR message is 8 bit hex string, with the following format [ group , sender , command , param , receiver , id ] 
 	for example : 1A7154F0
 
 	1  - group 
